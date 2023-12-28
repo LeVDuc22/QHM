@@ -1,0 +1,102 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 0;
+}
+body {
+  background-color: #FFFFFF;
+  font-family: 'Google Sans';
+}
+
+table {
+  margin: 1em 0 !important;
+}
+
+table.matrix {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+table.matrix thead {
+  position: relative;
+  display: block;
+  overflow: visible;
+}
+table.matrix thead th:nth-child(1) {
+  position: relative;
+  display: block;
+}
+table.matrix tbody {
+  position: relative;
+  display: block;
+  height: 180px;
+  overflow-x: scroll;
+  overflow-y: auto;
+}
+table.matrix tbody tr td:nth-child(1) {
+  position: relative;
+  display: block;
+  background: #f9fafb !important;
+}
+.fixed-top {
+  overflow-y: auto;
+  height: 200px;
+  margin-bottom: 1em;
+}
+.fixed-top table {
+  margin: 0px !important;
+}
+.fixed-top thead th {
+  position: sticky;
+  top: 0;
+}
+.fixed-top { border-bottom: 1px solid rgba(34,36,38,.1);}
+.ui {
+  font-family: 'Google Sans' !important;
+}
+.ui.menu .item img.logo {
+  margin-right: 1.5em;
+}
+.main.container {
+  margin-top: 3.5em;
+}
+canvas {
+  max-width: 100%;
+  height: auto !important;
+  width: auto !important;
+  border-radius: .28571429rem;
+}
+.custom-slider {
+  padding: 0 !important;
+}
+
+.ui.fixed.sticky {
+    margin-top: 3.5em !important;
+}
+.ui.menu.fixed {
+    z-index: 801;
+}
+.temp {
+    display: none
+}
+
+@media screen and (max-width: 800px) {
+    #header-desktop {
+        display: none;
+    }
+    #header-mobile {
+        display: block !important;
+    }
+    #team-info-mobile {
+        /*margin-right: 4em;*/
+        display: block !important;
+    }
+    #team-info {
+        display: none !important;
+    }
+}
+@media all and (display-mode: standalone) {
+    #butInstall {
+        display: none !important;
+    }
+}

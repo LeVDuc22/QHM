@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Quy hoạch và quản lý mạng</title>
+    
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans:400,500"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.8/semantic.min.css"
+    />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="ui fixed inverted menu">
+      <div class="ui container" style="display: flex;justify-content: center;align-items: center;">
+        <a id="header-desktop" href="./" class="header item" >
+          Quy hoạch và Quản lý mạng viễn thông
+        </a>
+      </div>
+      <div class="right menu"></div>
+    </div>
+    
+    <div id="example1" class="ui main intro container">
+      <div class="ui two column grid stackable">
+        <div class="ten wide column center aligned">
+          <div class="ui sticky">
+            <div id="topology"></div>
+            <div
+              id="loading"
+              class="ui inverted segment"
+              style="padding-top: 100%; margin-top: 0; padding-bottom: 0"
+            >
+              <div class="ui active inverted loader"></div>
+            </div>
+
+            <div class="ui vertical">
+              
+            </div>
+            
+            
+          </div>
+        </div>
+
+        <div class="six wide column">
+          <h4 class="ui horizontal divider header">
+            <button id="reload"  style="background-color: #f2f2f2; color: green;border-radius:10px;">
+                  <i >
+                  </i>
+                  Tạo mới
+            </button>
+          </h4>
+
+          <div class="ui vertical segment">
+            <div class="ui grid">
+              <div class="four wide column">
+                <p style="padding: 10px 0">N =</p>
+              </div>
+              <div class="ui input twelve wide column">
+                  <input type="number" value="90" id="number-nodes" disabled style="font-weight: 800;background-color: #f2f2f2;color: #999;" />
+              </div>
+            </div>
+
+            <div class="ui grid">
+                <div class="four wide column">
+                  <p style="padding: 10px 0">W =</p>
+                </div>
+                <div class="six wide column">
+                  <div class="ui input">
+                    <input type="number" value="2" id="number-w" disabled style="font-weight: 800;background-color: #f2f2f2;color: #999;" />
+                  </div>
+                </div>
+              </div>
+              <div class="ui grid">
+                <div class="four wide column">
+                  <p style="padding: 10px 0">R =</p>
+                </div>
+                <div class="six wide column">
+                  <div class="ui input">
+                    <input type="number" value="0.8" id="r-value" disabled style="font-weight: 800;background-color: #f2f2f2;color: #999;" />
+                  </div>
+                </div>
+              </div>
+            <div class="ui grid">
+              <div class="four wide column">
+                <p>α = <span id="alpha-value">0.4</span></p>
+              </div>
+              <div class="twelve wide column">
+                <div class="ui slider custom-slider" id="alpha-slider"></div>
+              </div>
+            </div>
+            <div class="ui grid">
+              <div class="four wide column">
+                <p>U<sub>min</sub> = <span id="umin-value">0.7</span></p>
+              </div>
+              <div class="twelve wide column">
+                <div class="ui slider custom-slider" id="umin-slider"></div>
+              </div>
+            </div>
+          </div>
+       
+          <div class="ui vertical segment">
+            <div class="ui two column grid">
+              <div class="column">
+                <!-- ck1: Đường bao -->
+                <div class="ui toggle checkbox">
+                  <input id="ck3" type="checkbox" />
+                  <label>Bán kính backbone</label>
+                </div>
+                <br /><br />
+                <div class="ui toggle checkbox">
+                  <input id="ck2" type="checkbox" />
+                  <label>Đường maxcost</label>
+                </div>
+              </div>
+              <div class="column">
+                <div class="ui toggle checkbox">
+                  <input id="ck4" type="checkbox" checked />
+                  <label>Đường B-A</label>
+                </div>
+                <br /><br />
+                  <div class="column">
+                    <div class="ui toggle checkbox">
+                      <input id="ck5" type="checkbox" />
+                      <label>Liên kết trực tiếp</label>
+                    </div>
+                  </div>
+             
+                
+              </div>
+            </div>
+          </div>
+          <br />
+         
+            <h4 class="ui horizontal divider header">Chi tiết</h4>
+            <div class="column">
+              <div class="ui toggle checkbox">
+                <input id="ck6" type="checkbox" />
+                <label>Mentor 2</label>
+              </div>
+            </div>
+        
+          <div id="detail" class="ui vertical segment">
+            <h4 class="ui horizontal divider header">Chi tiết</h4>
+            
+            <p class="ui">Lưu lượng</p>
+            <div id="flow"></div>
+            
+            <p class="ui">Trọng số</p>
+            <div id="weight" class="fixed-top"></div>
+
+            <div id="math" class="temp">$$$$</div>
+            <div id="display"></div>
+
+            <p class="ui">Phân loại nút</p>
+            <div id="nodes" class="fixed-top"></div>
+            <p class="ui">Danh sách nút backbone</p>
+            <div id="backbones" class="fixed-top"></div>
+            <p class="ui">Lưu lượng giữa các nút backbone</p>
+            <div id="backbone-flow"></div>
+            <p class="ui">Số đường trên liên kết</p>
+            <div id="number-line"></div>
+            <p class="ui">Độ sử dụng liên kết</p>
+            <div id="usage"></div>
+            <p class="ui">Danh sách liên kết</p>
+            <div id="links"></div>
+            <!-- <div id="mentor2">
+              <p class="ui">Liên kết trực tiếp được thêm</p>
+              <div id="direct-link"></div>
+            </div>
+          </div> -->
+          <!-- <p class="ui">
+            Tổng giá: <strong><span id="price"></span></strong>
+          </p> -->
+
+          
+        </div>
+      </div>
+    </div>
+    
+    <div id="problem-modal" class="ui small modal">
+      <div class="header">
+          Hướng dẫn
+      </div>
+      <div class="content">
+        <p>Các chức năng cơ bản: </p>
+        <ul>
+          <li>Nhập vào số lượng nút (N). </li>
+          <li>Alpha: Là hệ số α dùng trong thuật toán Mentor. </li>
+          <li>W (threshold): là giá trị ngưỡng để chọn nút Backbone. </li>
+          <li>R: Bán kính của mạng truy nhập. </li>
+        </ul>
+        <p>Sau khi nhập các thông số đầu vào ta nhấn nút Thiết lập mạng để chương trình thực hiện thuật toán MENTOR thiết lập mạng giữa các nút Backbone và mạng truy nhập.</p>
+        <p>
+        Ta có thể kéo thả các thông số alpha, R và W để thay đổi các thông số cho mạng. Khi kéo thả, mạng sẽ thay đổi theo các thông số mới ngay lập tức để ta có cái nhìn tổng quan hơn.        
+      </p></div>
+      <div class="actions">
+          <div id="close-problem-modal" class="ui button">
+          Đóng
+          </div>
+      </div>
+  </div>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Semantic UI Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.8/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.8/components/range.min.js"></script>
+    <!-- p5js Canvas Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+    <!-- MathJax Library-->
+    <!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        messageStyle: "none"
+      });
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
