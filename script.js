@@ -424,6 +424,7 @@ function setup() {
     }
   }
   let R_backbone = R * max_distance.distance;
+
   if (DRAW_MAX_DISTANCE) {
     lineNode(max_distance.node1, max_distance.node2, color(255, 0, 0));
   }
@@ -432,7 +433,7 @@ function setup() {
   let backbones = [];
   points.forEach(function (e, i) {
     if (w[i] / C > W) {
-      console.log(e.index + 1 + '-' + e.w );
+     
       backbones.push(e);
       e.is_backbone = true;
       e.is_access = false;
@@ -445,6 +446,7 @@ function setup() {
   });
 
   while (true) {
+    
     let x_numerator = 0,
       y_numerator = 0,
       denominator = 0;
@@ -452,6 +454,7 @@ function setup() {
       if (e.is_backbone != true) {
         // Nút chưa được phân loại và nút truy nhập
         backbones.forEach(function (b) {
+          
           if (isNodeInBackboneCircle(e, b, R_backbone)) {
             // Nếu nút cần kiểm tra nằm trong nút backbone b
             e.is_access = true; // Chuyển thành nút truy nhập
@@ -475,27 +478,31 @@ function setup() {
         if (e.access === undefined) e.access = [];
       }
     });
-    let centerNode = {
-      x: x_numerator / denominator,
-      y: y_numerator / denominator,
-    };
+    
+   
     let dc = [];
     let dcmax = 0,
       w_at_dcmax = 0,
       untype = 0;
     points.forEach((e) => {
       if (!e.classified) {
+        console.log(e);
         untype++;
         x_numerator += e.x * e.w;
         y_numerator += e.y * e.w;
         denominator += e.w;
       }
     });
+    let centerNode = {
+      x: x_numerator / denominator,
+      y: y_numerator / denominator,
+    };
     if (untype == 0) {
       break;
     }
     points.forEach((e, i) => {
       if (!e.classified) {
+        console.log(centerNode);
         dc[i] = calcDistance(e, centerNode);
         if (dc[i] >= dcmax) {
           dcmax = calcDistance(e, centerNode);
