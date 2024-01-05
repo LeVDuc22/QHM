@@ -16,7 +16,7 @@ $.fn.extend({
       matrix.forEach((element) => {
         numberCol = element.length > numberCol ? element.length : numberCol;
       });
-      //console.log(numberCol)
+
       for (let i = 1; i <= numberCol; i++) {
         html += "<th>" + i + "</th>";
       }
@@ -79,7 +79,7 @@ window.onload = function () {
   $("#alpha-slider").slider({
     min: 0,
     max: 1,
-    start: 0.4,
+    start: 1,
     step: 0.01,
     onMove: function (val) {
       $("#alpha-value").html(val);
@@ -91,7 +91,7 @@ window.onload = function () {
   $("#umin-slider").slider({
     min: 0,
     max: 1,
-    start: 0.7,
+    start: 1,
     step: 0.01,
     onMove: function (val) {
       $("#umin-value").html(val);
@@ -135,6 +135,7 @@ window.onload = function () {
 };
 
 function reload(init) {
+ 
   if (init) {
     let w,T;
     var mathDiv = document.getElementById("math");
@@ -170,8 +171,9 @@ function reload(init) {
     }
     w[i] = result;
   }
+  
 
-  // console.log(w);
+  
 
   // Gán lưu lượng giữa các nút
   T = new Array(nodeNumber);
@@ -205,11 +207,11 @@ function reload(init) {
     }
   }
 
-  $("#flow").printMatrix({
-    title: "T",
-    matrix: T,
-    height: "300px",
-  });
+  // $("#flow").printMatrix({
+  //   title: "T",
+  //   matrix: T,
+  //   height: "300px",
+  // });
 
   setNodes();
 
@@ -242,7 +244,7 @@ let nodeNumber = 90;
 let nodes = [];
 let W = 2;
 let R = 0.3;
-let C = 16;
+let C = 15;
 let alpha = 1;
 let u_min = 0.8;
 const wNumberElement = document.getElementById("number-w");
@@ -329,7 +331,7 @@ function isAntiClockwise(a, b, c) {
 }
 
 function isNodeInBackboneCircle(checking_node, backbone_node, R_backbone) {
-  return calcDistance(checking_node, backbone_node) <= R_backbone;
+  return  calcDistance(checking_node, backbone_node) <= R_backbone;
 }
 
 function removeNodeFromBackbone(node, backbone_node) {
@@ -357,7 +359,7 @@ function setup() {
 
   // Vẽ nodes
   let points = JSON.parse(JSON.stringify(nodes));
-  console.log(points);
+
   points.forEach((point) => {
     //point(Math.round(point.x/2), Math.round(point.y/2));
     circle(Math.round(point.x / 2), Math.round(point.y / 2), 4);
@@ -430,6 +432,7 @@ function setup() {
   let backbones = [];
   points.forEach(function (e, i) {
     if (w[i] / C > W) {
+      console.log(e.index + 1 + '-' + e.w );
       backbones.push(e);
       e.is_backbone = true;
       e.is_access = false;
@@ -500,7 +503,7 @@ function setup() {
         }
       }
     });
-    //console.log(untype);
+  
     let merit_max = 0;
     index_at_merit_max = 0;
     points.forEach(function (e, i) {
@@ -565,7 +568,7 @@ function setup() {
     return a.index - b.index;
   });
 
-  // console.log(backbones);
+ 
 
   let T_b = [];
   backbones.forEach((b1, i1) => {
@@ -576,7 +579,7 @@ function setup() {
         b1.access.forEach((a1) => {
           trafic += T[a1.index][b2.index];
           b2.access.forEach((a2) => {
-            //console.log(a1, a2);
+           
             trafic += T[a1.index][a2.index];
           });
         });
@@ -592,7 +595,8 @@ function setup() {
   for (let i = 0; i < numberBackbones - 1; i++) {
     for (let j = i + 1; j < numberBackbones; j++) {
       if (T_b[i][j] !== 0) {
-        //console.log("T_b("+i+","+j+") = "+T_b[i][j]);
+       
+        
       }
     }
   }
@@ -647,7 +651,7 @@ function setup() {
   });
 
   // 3.2. Xây dựng cây Prim - Dijsktra cho các nút backbone
-  //console.log(backbones);
+ 
   let label = new Array(numberBackbones).fill(Infinity); // lable[i] là nhãn của nút i
   let S = new Array(numberBackbones).fill(false); // S == true nghĩa là điểm đã được xét
   let P = new Array(numberBackbones).fill(sourceBackboneIndex); // Hàm tiền bối
@@ -737,7 +741,7 @@ function setup() {
     }
   }
 
-  //console.log(path);
+ 
   if (!MENTOR_1) {
     /* // Sử dụng lưu lượng gốc giữa các nút backbone
         P.forEach((e,i) => {
@@ -783,7 +787,10 @@ function setup() {
           trafic: trafic,
         };
         if (!HIDE_NO_TRAFFIC || T_b[e][i] > 0) {
-          lineBlackboneNode(backbones[e], backbones[i], color(255, 204, 0));
+          if(MENTOR_2 == false){
+            lineBlackboneNode(backbones[e], backbones[i], color(255, 204, 0));
+          }
+          
         }
       }
     });
@@ -810,7 +817,7 @@ function setup() {
     pair.sort(function (a, b) {
       return b.hop - a.hop;
     });
-    //console.log(pair);
+
     pair.forEach((e) => {
       let n = Math.ceil(T_b[e.s][e.d] / C);
       let u = T_b[e.s][e.d] / (n * C);
@@ -993,7 +1000,7 @@ function setup() {
         htmlDirectLinkTable +=
           "<td>" +
           (
-            0.5 *
+            0.4 *
             links[pair.start][pair.stop].d *
             links[pair.start][pair.stop].n
           ).toFixed(2) +
@@ -1017,11 +1024,11 @@ function setup() {
   let Price = 0;
   for (let i = 0; i < numberBackbones - 1; i++) {
     for (let j = i + 1; j < numberBackbones; j++) {
-      Price += links[i][j].n * 0.5 * links[i][j].d;
+      Price += links[i][j].n * 0.4 * links[i][j].d;
     }
   }
   $("#price").html(Price.toFixed(2));
-  console.log("links", links)
+ 
 
   // In danh sách liên kết
   let htmlLinkTable =
@@ -1041,7 +1048,7 @@ function setup() {
         htmlLinkTable += "<td>" + links[i][j].d.toFixed(2) + "</td>";
         htmlLinkTable +=
           "<td>" +
-          (0.5 * links[i][j].d * links[i][j].n).toFixed(2) +
+          (0.4 * links[i][j].d * links[i][j].n).toFixed(2) +
           "</td></tr>";
       }
     }
@@ -1123,4 +1130,94 @@ function setup() {
   $(".ui.sticky").sticky({
     offset: 50,
   });
+
+
+  let newPoints = points.map(point => {
+    if(point.is_access){
+      let backboneNode = {
+        // Xử lý từng phần tử trong mảng 'backbone'
+        // Ví dụ: Trích xuất các thuộc tính bạn muốn từ 'accessItem'
+        
+        x: point.backbone.x,
+        y: point.backbone.y,
+        index: point.backbone.index,
+        w: point.backbone.w,
+        isAccess: point.backbone.is_access,
+        backboneDistance: point.backbone.backbone_distance,
+        moment: point.backbone.moment,
+       
+      };
+    
+      // Tạo đối tượng mới chứa các thuộc tính cần thiết và chuỗi JSON của 'access'
+      return {
+        x: point.x,
+        y: point.y,
+        index: point.index,
+        w: point.w,
+        isAccess: point.is_access,
+        isBackbone: point.is_backbone,
+        backboneDistance: point.backbone_distance,
+        moment: point.moment,
+        backbone: backboneNode // Chuyển đổi 'processedAccess' thành chuỗi JSON
+      };
+      
+      
+    }
+    else{
+      return {
+        x: point.x,
+        y: point.y,
+        index: point.index,
+        w: point.w,
+        isAccess: point.is_access,
+        isBackbone: point.is_backbone,
+        backboneDistance: point.backbone_distance,
+        moment: point.moment,
+        
+      };
+    }
+    
+    // Xử lý mảng 'backbone' trong 'point.access' trước khi chuyển đổi thành chuỗi JSON
+   
+  });
+  let data = {
+    myPoints : newPoints ,
+    
+    tb: [...T_b]
+  }
+  function flattenObject(obj, parentKey = '', result = {}) {
+    for (let key in obj) {
+      let newKey = parentKey ? `${parentKey}.${key}` : key;
+      if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+        flattenObject(obj[key], newKey, result);
+      } else {
+        result[newKey] = obj[key];
+      }
+    }
+    return result;
+  }
+ 
+  fetch('https://localhost:7163/createfile', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+})
+.then(response => {
+  return response.blob(); // Chuyển đổi dữ liệu nhận được thành Blob
+})
+.then(blob => {
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Sample.xlsx'; // Tên file
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
+})
+.catch(error => {
+  console.error('Đã xảy ra lỗi:', error);
+});
 }

@@ -87,13 +87,21 @@
                 </div>
                 <div class="six wide column">
                   <div class="ui input">
-                    <input type="number" value="0.8" id="r-value" disabled style="font-weight: 800;background-color: #f2f2f2;color: #999;" />
+                    <input type="number" value="0.3" id="r-value" disabled style="font-weight: 800;background-color: #f2f2f2;color: #999;" />
                   </div>
                 </div>
               </div>
+              <h4 class="ui horizontal divider header">Giải thuật mentor2</h4>
+              <div class="column">
+                <div class="ui toggle checkbox">
+                  <input id="ck6" type="checkbox" />
+                  <label>Mentor 2</label>
+                </div>
+              </div>
+              <h4 class="ui horizontal divider header">Chức năng</h4> 
             <div class="ui grid">
               <div class="four wide column">
-                <p>α = <span id="alpha-value">0.4</span></p>
+                <p>α = <span id="alpha-value">1</span></p>
               </div>
               <div class="twelve wide column">
                 <div class="ui slider custom-slider" id="alpha-slider"></div>
@@ -101,7 +109,7 @@
             </div>
             <div class="ui grid">
               <div class="four wide column">
-                <p>U<sub>min</sub> = <span id="umin-value">0.7</span></p>
+                <p>U<sub>min</sub> = <span id="umin-value">1</span></p>
               </div>
               <div class="twelve wide column">
                 <div class="ui slider custom-slider" id="umin-slider"></div>
@@ -142,19 +150,13 @@
           </div>
           <br />
          
-            <h4 class="ui horizontal divider header">Chi tiết</h4>
-            <div class="column">
-              <div class="ui toggle checkbox">
-                <input id="ck6" type="checkbox" />
-                <label>Mentor 2</label>
-              </div>
-            </div>
+          
         
           <div id="detail" class="ui vertical segment">
             <h4 class="ui horizontal divider header">Chi tiết</h4>
             
-            <p class="ui">Lưu lượng</p>
-            <div id="flow"></div>
+            <!-- <p class="ui">Lưu lượng</p>
+            <div id="flow"></div> -->
             
             <p class="ui">Trọng số</p>
             <div id="weight" class="fixed-top"></div>
@@ -210,7 +212,7 @@
           </div>
       </div>
   </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Semantic UI Library -->
